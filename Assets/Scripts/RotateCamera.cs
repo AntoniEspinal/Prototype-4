@@ -5,15 +5,11 @@ using UnityEngine;
 public class RotateCamera : MonoBehaviour
 {
     public float rotationSpeed;
-    private Rigidbody playerRb;
-    public float speed = 5.0f;
-    private GameObject focalPoint;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerRb = GetComponent<Rigidbody>();
-        focalPoint = GameObject.Find("Focal Point");
+        
     }
 
     // Update is called once per frame
@@ -21,8 +17,5 @@ public class RotateCamera : MonoBehaviour
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         transform.Rotate(Vector3.up, horizontalInput * rotationSpeed * Time.deltaTime);
-
-        float forwardInput = Input.GetAxis("Vertical");
-        playerRb.AddForce(focalPoint.transform.forward * speed * forwardInput);
     }
 }
