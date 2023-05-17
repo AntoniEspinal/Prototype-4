@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     public float speed = 5.0f;
     public bool hasPowerup = false;
     public GameObject powerupIndicator;
+    public GameObject projectilePrefab;
+    private float topBound = 30;
+    private float lowerBound = -10;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +28,20 @@ public class PlayerController : MonoBehaviour
         playerRb.AddForce(focalPoint.transform.forward * forwardInput * speed);
 
         powerupIndicator.transform.position = transform.position + new Vector3(0, -0.5f, 0);
+        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // Launch a projectile from player
+            Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
+        }
+        if (transform.position.z > topBound)
+        {
+            Destroy(gameObject);
+        }
+        else if (transform.position.z < lowerBound)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
