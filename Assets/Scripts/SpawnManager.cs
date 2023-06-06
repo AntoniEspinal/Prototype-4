@@ -7,14 +7,17 @@ public class SpawnManager : MonoBehaviour
     public GameObject enemyPrefab;
     public GameObject powerupPrefab;
     public GameObject hardenemyPrefab;
+    public GameObject bossEnemy;
     private float spawnRange = 9.0f;
     public int enemyCount;
     public int waveNumber = 1;
+    public int bossWaveNumber = 5;
 
     // Start is called before the first frame update
     void Start()
     {
         SpawnEnemyWave(waveNumber);
+        SpawnBossWave(bossWaveNumber);
         Instantiate(powerupPrefab, GenerateSpawnPosition(), powerupPrefab.transform.rotation);
     }
 
@@ -29,6 +32,11 @@ public class SpawnManager : MonoBehaviour
             SpawnEnemyWave(waveNumber);
             Instantiate(powerupPrefab, GenerateSpawnPosition(), powerupPrefab.transform.rotation);
         }
+        if (waveNumber > 4)
+        {
+            bossWaveNumber++;
+            SpawnBossWave(bossWaveNumber);
+        }
     }
 
     void SpawnEnemyWave(int enemiesToSpawn)
@@ -36,6 +44,18 @@ public class SpawnManager : MonoBehaviour
         for(int i = 0; i < enemiesToSpawn; i++)
         {
             Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
+        }
+        for(int i = 3; i > enemiesToSpawn; i++)
+        {
+            Instantiate(hardenemyPrefab, GenerateSpawnPosition(), hardenemyPrefab.transform.rotation);
+        }
+    }
+
+    void SpawnBossWave(int bossTimer)
+    {
+        for(int i = 0; i < bossTimer; i++)
+        {
+            Instantiate(bossEnemy, GenerateSpawnPosition(), bossEnemy.transform.rotation);
         }
     }
 
